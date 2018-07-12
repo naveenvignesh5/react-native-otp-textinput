@@ -28,7 +28,7 @@ class OTPTextView extends Component {
         focusedInput: 0,
     }
 
-    componentDidMount() {
+    componentWillMount() {
         const { defaultValue, cellTextLength } = this.props;
         if (defaultValue) {
             this.otpText = defaultValue.match(new RegExp('.{1,' + cellTextLength + '}', 'g'));
@@ -41,7 +41,7 @@ class OTPTextView extends Component {
         const { cellTextLength, inputCount, handleTextChange } = this.props;
         this.otpText[i] = text;
         handleTextChange(this.otpText.join(""));
-        if (text.length === cellTextLength && i !== inputCount - 1) {
+        if (text && text.length === cellTextLength && i !== inputCount - 1) {
             this.refs[`${i + 1}`].focus();
         }
     }

@@ -7,6 +7,7 @@ Supports both Android and iOS.
 
 ##### Props
 The following props are applicable for the component.
+
 Prop              | Type     | Optional | Default     | Description
 ----------------- | -------- | -------- | ----------- | -----------
 defaultValue         | string     | Yes       | ''       | Default Value that can be set based on OTP / Pin received from parent container.
