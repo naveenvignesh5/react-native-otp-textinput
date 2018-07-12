@@ -2,10 +2,11 @@
 
 React Native Component that can used for OTPs and Pins as secure pin input.
 
-##### Platform Support
+#### Platform Support
 Supports both Android and iOS.
 
-##### Props
+#### Props
+
 The following props are applicable for the component.
 
 Prop              | Type     | Optional | Default     | Description
