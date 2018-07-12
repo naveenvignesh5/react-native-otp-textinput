@@ -1,0 +1,27 @@
+{
+  "name": "react-native-otp-textview",
+  "version": "0.0.1",
+  "description": "Textview usable for OTP implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native",
+    "react-native-component",
+    "otp",
+    "react-component",
+    "ios",
+    "android",
+    "otpinput"
+  ],
+  "dependencies": {
+    "prop-types": "^15.6.2"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.20.0",
+    "prop-types": "^15.5.7"
+  },
+  "author": "Naveen Vignesh.B <naveenvignesh5.nv@gmail.com>",
+  "license": "MIT"
+}
