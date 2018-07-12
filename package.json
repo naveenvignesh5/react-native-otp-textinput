@@ -1,6 +1,6 @@
 {
   "name": "react-native-otp-textinput",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Textview usable for OTP implementation",
   "main": "index.js",
   "scripts": {
@@ -15,6 +15,10 @@
     "android",
     "otp-input"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:naveenvignesh5/react-native-otp-textinput.git"
+  },
   "dependencies": {
     "prop-types": "^15.6.2"
   },
