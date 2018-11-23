@@ -7,7 +7,7 @@ Supports both Android and iOS.
 
 #### Props
 
-The following props are applicable for the component.
+The following props are applicable for the component along with **props supported by react native text input component**
 
 Prop              | Type     | Optional | Default     | Description
 ----------------- | -------- | -------- | ----------- | -----------
@@ -19,8 +19,6 @@ offTintColor       | string     | Yes      | #DCDCDC | Color for Cell Border Bor
 cellTextLength       | number     | Yes      | 1 | Number of character that can be entered inside a single cell.
 containerStyle       | object     | Yes      | {} | style for overall container.
 textInputStyle       | object     | Yes      | {} | style for text input.
-textStyle       | object     | Yes      | {} | style for text inside text input.
 
 ### TO-DO
 - [ ] Unit Testing
-- [ ] Optimizing Code

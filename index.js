@@ -12,13 +12,11 @@ const styles = StyleSheet.create({
     width: 50,
     borderBottomWidth: 4,
     margin: 5,
-  },
-  text: {
     textAlign: 'center',
     fontSize: 22,
     fontWeight: '500',
     color: '#000000'
-  }
+  },
 });
 
 class OTPTextView extends PureComponent {
@@ -44,11 +42,12 @@ class OTPTextView extends PureComponent {
       return {
         otpText,
       }
+    }, () => {
+      handleTextChange(this.state.otpText.join(""));
+      if (text.length === cellTextLength && i !== inputCount - 1) {
+        this.inputs[i+1].focus();
+      }
     });
-    handleTextChange(this.state.otpText.join(""));
-    if (text.length === cellTextLength && i !== inputCount - 1) {
-      this.inputs[i+1].focus();
-    }
   }
 
   onInputFocus = (i) => {
@@ -71,7 +70,6 @@ class OTPTextView extends PureComponent {
       cellTextLength,
       containerStyle,
       textInputStyle,
-      textStyle,
       ...textInputProps
     } = this.props;
 
@@ -84,9 +82,7 @@ class OTPTextView extends PureComponent {
       }
       const inputStyle = [
         styles.textInput,
-        styles.text,
         textInputStyle,
-        textStyle,
         { borderColor: offTintColor }
       ];
       if (this.state.focusedInput === i) {
@@ -136,7 +132,6 @@ OTPTextView.defaultProps = {
   cellTextLength: 1,
   containerStyle: {},
   textInputStyle: {},
-  textStyle: {},
   handleTextChange: () => {},
 }
 
