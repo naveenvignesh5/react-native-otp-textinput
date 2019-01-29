@@ -1,5 +1,7 @@
 ### REACT NATIVE OTP TEXT INPUT
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5ad32d48e91a4095824a5b9bd16059c3)](https://app.codacy.com/app/naveenvignesh5/react-native-otp-textinput?utm_source=github.com&utm_medium=referral&utm_content=naveenvignesh5/react-native-otp-textinput&utm_campaign=Badge_Grade_Dashboard)
+
 React Native Component that can used for OTPs and Pins as secure pin input.
 
 #### Platform Support
