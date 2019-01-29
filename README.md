@@ -1,5 +1,12 @@
 ### REACT NATIVE OTP TEXT INPUT
 
+[![NPM](https://nodei.co/npm/react-native-otp-textinput.png)](https://nodei.co/npm/react-native-otp-textinput/)
+
+[![npm version](https://badge.fury.io/js/react-native-otp-textinput.svg)](https://badge.fury.io/js/react-native-otp-textinput)
+![npm downloads](https://img.shields.io/npm/dw/react-native-otp-textinput.svg)
+
+<img src="ScreenShots/otpview.gif" width="220px"><br>
+
 React Native Component that can used for OTPs and Pins as secure pin input.
 
 #### Platform Support
