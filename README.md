@@ -12,7 +12,7 @@ import OTPTextView from 'react-native-otp-textinput'
     inputCount={6}
     textInputStyle={{width:40}}
     handleTextChange={(text)=>this.setState({otp:text})}
-    keyboardType="numeric"
+    keyboardType="default" //can be "phone-pad", "numeric" e.t.c
     />
  //conolse.log(this.state.otp) which gives 'ddsfga'
 ```
