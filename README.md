@@ -4,7 +4,17 @@
 
 [![npm version](https://badge.fury.io/js/react-native-otp-textinput.svg)](https://badge.fury.io/js/react-native-otp-textinput)
 ![npm downloads](https://img.shields.io/npm/dw/react-native-otp-textinput.svg)
+Example Code:
+```javascript
+import OTPTextView from 'react-native-otp-textinput'
 
+<OTPTextView 
+    inputCount={5}
+    textInputStyle={{width:40}}
+    handleTextChange={(text)=>this.setState({otp:text})}
+    />
+ //conolse.log(this.state.otp) which gives
+```
 <img src="ScreenShots/otpview.gif" width="220px"><br>
 
 React Native Component that can used for OTPs and Pins as secure pin input.
