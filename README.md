@@ -9,11 +9,11 @@ Example Code:
 import OTPTextView from 'react-native-otp-textinput'
 
 <OTPTextView 
-    inputCount={6}
-    textInputStyle={{width:40}}
-    handleTextChange={(text)=>this.setState({otp:text})}
-    keyboardType="default" //can be "phone-pad", "numeric" e.t.c
-    />
+   inputCount={6}
+   textInputStyle={{width:40}}
+   handleTextChange={(text)=>this.setState({otp:text})}
+   keyboardType="default" //can be "phone-pad", "numeric" e.t.c
+ />
  //conolse.log(this.state.otp) which gives 'ddsfga'
 ```
 <img src="ScreenShots/otpview.gif" width="220px"><br>
