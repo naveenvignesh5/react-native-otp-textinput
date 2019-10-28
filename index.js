@@ -56,7 +56,8 @@ class OTPTextView extends PureComponent {
 
   onKeyPress = (e, i) => {
     const { otpText = [] } = this.state;
-    if (e.nativeEvent.key === 'Backspace' && i !== 0 && otpText[i] === '') {
+    //Since otpText[i] is undefined, The clear operation is not functional
+    if (e.nativeEvent.key === 'Backspace' && i !== 0 && !otpText[i]) {
       this.inputs[i-1].focus();
     }
   }
