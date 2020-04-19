@@ -1,66 +1,101 @@
-import React, { PureComponent } from 'react';
-import { View, TextInput, StyleSheet, Dimensions } from 'react-native';
-import PropTypes from 'prop-types';
+import React, { PureComponent } from "react";
+import { View, TextInput, StyleSheet } from "react-native";
+import PropTypes from "prop-types";
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   textInput: {
     height: 50,
     width: 50,
     borderBottomWidth: 4,
     margin: 5,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 22,
-    fontWeight: '500',
-    color: '#000000'
+    fontWeight: "500",
+    color: "#000000",
   },
 });
+
+const getOTPTextChucks = (inputCount, inputCellLength, text) => {
+  let otpText =
+    text.match(new RegExp(".{1," + inputCellLength + "}", "g")) || [];
+
+  otpText = otpText.slice(0, inputCount - 1);
+
+  return otpText;
+};
 
 class OTPTextView extends PureComponent {
   constructor(props) {
     super(props);
+
     this.state = {
       focusedInput: 0,
       otpText: [],
     };
+
+    this.defaultChars = getOTPTextChucks(
+      props.inputCount,
+      props.inputCellLength,
+      props.defaultValue
+    );
+
     this.inputs = [];
   }
 
-  componentDidMount() {
-    const { defaultValue, cellTextLength } = this.props;
-    this.otpText = defaultValue.match(new RegExp('.{1,' + cellTextLength + '}', 'g'));
-  }
-
   onTextChange = (text, i) => {
-    const { cellTextLength, inputCount, handleTextChange } = this.props;
-    this.setState((prevState) => {
-      let { otpText } = prevState;
-      otpText[i] = text;
-      return {
-        otpText,
+    const { inputCellLength, inputCount, handleTextChange } = this.props;
+    this.setState(
+      (prevState) => {
+        let { otpText } = prevState;
+        otpText[i] = text;
+        return {
+          otpText,
+        };
+      },
+      () => {
+        handleTextChange(this.state.otpText.join(""));
+        if (text.length === inputCellLength && i !== inputCount - 1) {
+          this.inputs[i + 1].focus();
+        }
       }
-    }, () => {
-      handleTextChange(this.state.otpText.join(""));
-      if (text.length === cellTextLength && i !== inputCount - 1) {
-        this.inputs[i+1].focus();
-      }
-    });
-  }
+    );
+  };
 
   onInputFocus = (i) => {
+    let prevIndex = i - 1;
+
+    if (prevIndex > -1 && !this.state.otpText[prevIndex]) {
+      this.inputs[prevIndex].focus();
+      return;
+    }
+
     this.setState({ focusedInput: i });
-  }
+  };
 
   onKeyPress = (e, i) => {
-    const { otpText = [] } = this.state;
-    //Since otpText[i] is undefined, The clear operation is not functional
-    if (e.nativeEvent.key === 'Backspace' && i !== 0 && !otpText[i]) {
-      this.inputs[i-1].focus();
+    if (
+      e.nativeEvent.key === "Backspace" &&
+      i !== 0 &&
+      !((this.state.otpText[i] || "").length - 1)
+    ) {
+      this.inputs[i - 1].focus();
     }
-  }
+  };
+
+  clear = () => {
+    this.setState(
+      {
+        otpText: [],
+      },
+      () => {
+        this.inputs[0].focus();
+      }
+    );
+  };
 
   render() {
     const {
@@ -68,7 +103,7 @@ class OTPTextView extends PureComponent {
       offTintColor,
       tintColor,
       defaultValue,
-      cellTextLength,
+      inputCellLength,
       containerStyle,
       textInputStyle,
       ...textInputProps
@@ -77,39 +112,35 @@ class OTPTextView extends PureComponent {
     const TextInputs = [];
 
     for (let i = 0; i < inputCount; i += 1) {
-      let defaultChars = [];
-      if (defaultValue) {
-        defaultChars = defaultValue.match(new RegExp('.{1,' + cellTextLength + '}', 'g'));
-      }
       const inputStyle = [
         styles.textInput,
         textInputStyle,
-        { borderColor: offTintColor }
+        { borderColor: offTintColor },
       ];
+
       if (this.state.focusedInput === i) {
         inputStyle.push({ borderColor: tintColor });
       }
 
       TextInputs.push(
         <TextInput
-          ref={(e) => { this.inputs[i] = e; }}
+          ref={(e) => {
+            this.inputs[i] = e;
+          }}
           key={i}
-          defaultValue={defaultValue ? defaultChars[i] : ''}
+          defaultValue={defaultValue ? this.defaultChars[i] : ""}
+          value={this.state.otpText[i] || ""}
           style={inputStyle}
-          maxLength={this.props.cellTextLength}
+          maxLength={this.props.inputCellLength}
           onFocus={() => this.onInputFocus(i)}
           onChangeText={(text) => this.onTextChange(text, i)}
           multiline={false}
-          onKeyPress={e => this.onKeyPress(e, i)}
+          onKeyPress={(e) => this.onKeyPress(e, i)}
           {...textInputProps}
         />
       );
     }
-    return (
-      <View style={[styles.container, containerStyle]}>
-        {TextInputs}
-      </View>
-    );
+    return <View style={[styles.container, containerStyle]}>{TextInputs}</View>;
   }
 }
 
@@ -118,22 +149,22 @@ OTPTextView.propTypes = {
   inputCount: PropTypes.number,
   containerStyle: PropTypes.object,
   textInputStyle: PropTypes.object,
-  cellTextLength: PropTypes.number,
+  inputCellLength: PropTypes.number,
   tintColor: PropTypes.string,
   offTintColor: PropTypes.string,
   handleTextChange: PropTypes.func,
   inputType: PropTypes.string,
-}
+};
 
 OTPTextView.defaultProps = {
-  defaultValue: '',
+  defaultValue: "",
   inputCount: 4,
-  tintColor: '#3CB371',
-  offTintColor: '#DCDCDC',
-  cellTextLength: 1,
+  tintColor: "#3CB371",
+  offTintColor: "#DCDCDC",
+  inputCellLength: 1,
   containerStyle: {},
   textInputStyle: {},
   handleTextChange: () => {},
-}
+};
 
 export default OTPTextView;
