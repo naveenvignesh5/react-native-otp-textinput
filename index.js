@@ -106,6 +106,7 @@ class OTPTextView extends PureComponent {
       inputCellLength,
       containerStyle,
       textInputStyle,
+      keyboardType,
       ...textInputProps
     } = this.props;
 
@@ -128,6 +129,9 @@ class OTPTextView extends PureComponent {
             this.inputs[i] = e;
           }}
           key={i}
+          autoCorrect={false}
+          keyboardType={keyboardType}
+          autoFocus={false}
           defaultValue={defaultValue ? this.defaultChars[i] : ""}
           value={this.state.otpText[i] || ""}
           style={inputStyle}
@@ -154,6 +158,7 @@ OTPTextView.propTypes = {
   offTintColor: PropTypes.string,
   handleTextChange: PropTypes.func,
   inputType: PropTypes.string,
+  keyboardType: PropTypes.string,
 };
 
 OTPTextView.defaultProps = {
@@ -165,6 +170,7 @@ OTPTextView.defaultProps = {
   containerStyle: {},
   textInputStyle: {},
   handleTextChange: () => {},
+  keyboardType: "numeric",
 };
 
 export default OTPTextView;
