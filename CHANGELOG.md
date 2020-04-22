@@ -1,5 +1,18 @@
 # Changelog
 
+## [Unreleased](https://github.com/naveenvignesh5/react-native-otp-textinput/tree/HEAD)
+
+[Full Changelog](https://github.com/naveenvignesh5/react-native-otp-textinput/compare/v0.0.7...HEAD)
+
+**Closed issues:**
+
+- Should only allow numbers not dot and comma [\#9](https://github.com/naveenvignesh5/react-native-otp-textinput/issues/9)
+- Reset OTP [\#8](https://github.com/naveenvignesh5/react-native-otp-textinput/issues/8)
+
+## [v0.0.7](https://github.com/naveenvignesh5/react-native-otp-textinput/tree/v0.0.7) (2020-04-22)
+
+[Full Changelog](https://github.com/naveenvignesh5/react-native-otp-textinput/compare/0.0.6...v0.0.7)
+
 ## [0.0.6](https://github.com/naveenvignesh5/react-native-otp-textinput/tree/0.0.6) (2020-04-18)
 
 [Full Changelog](https://github.com/naveenvignesh5/react-native-otp-textinput/compare/f7ab4a3a3171106389ff22bfd5d388057678fdac...0.0.6)
