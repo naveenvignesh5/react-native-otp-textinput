@@ -12,7 +12,6 @@ React Native Component that can used for OTPs and Pins as secure pin input.
 npm i -S react-native-otp-textinput
 ```
 
-
 #### Demo
 
 <img src="ScreenShots/demo.gif" width="220px"><br>
@@ -26,7 +25,7 @@ Supports both Android and iOS.
 
 #### Props
 
-The following props are applicable for the component along with **props supported by react native text input component**
+The following props are applicable for the component along with **props supported by react native `TextInput` component**
 
 Prop              | Type     | Optional | Default     | Description
 ----------------- | -------- | -------- | ----------- | -----------
@@ -38,3 +37,51 @@ offTintColor       | string     | Yes      | #DCDCDC | Color for Cell Border Bor
 inputCellLength       | number     | Yes      | 1 | Number of character that can be entered inside a single cell.
 containerStyle       | object     | Yes      | {} | style for overall container.
 textInputStyle       | object     | Yes      | {} | style for text input.
+
+#### Helper Functions
+
+Clearing and Setting values to component
+
+```javascript
+// using traditional ref
+clearText = () => {
+    this.otpInput.clear();
+}
+
+setText = () => {
+    this.otpInput.setValue("1234");
+}
+
+render() {
+    return (
+        <View>
+            <OTPTextInput ref={e => (this.otpInput = e)} >
+            <Button title="clear" onClick={this.clearText}>
+        </View>
+    );
+}
+```
+
+```javascript
+// hooks
+import React, { useRef } from 'react';
+
+const ParentComponent = () => {
+    const otpInput = useRef(null);
+
+    const clearText = () => {
+        otpInput.current.clear();
+    }
+
+    const setText = () => {
+        otpInput.current.setValue("1234");
+    }
+
+    return (
+        <View>
+            <OTPTextInput ref={e => (otpInput = e)} >
+            <Button title="clear" onClick={clearText}>
+        </View>
+    );
+}
+```
