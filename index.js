@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { View, TextInput, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 
@@ -23,34 +23,43 @@ const getOTPTextChucks = (inputCount, inputCellLength, text) => {
   let otpText =
     text.match(new RegExp(".{1," + inputCellLength + "}", "g")) || [];
 
-  otpText = otpText.slice(0, inputCount - 1);
+  otpText = otpText.slice(0, inputCount);
 
   return otpText;
 };
 
-class OTPTextView extends PureComponent {
+class OTPTextView extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       focusedInput: 0,
-      otpText: [],
+      otpText: getOTPTextChucks(
+        props.inputCount,
+        props.inputCellLength,
+        props.defaultValue
+      ),
     };
-
-    this.defaultChars = getOTPTextChucks(
-      props.inputCount,
-      props.inputCellLength,
-      props.defaultValue
-    );
 
     this.inputs = [];
   }
 
+  basicValidation = (text) => {
+    const validText = /^[0-9a-zA-Z]+$/;
+    return text.match(validText);
+  };
+
   onTextChange = (text, i) => {
     const { inputCellLength, inputCount, handleTextChange } = this.props;
+
+    if (text && !this.basicValidation(text)) {
+      return;
+    }
+
     this.setState(
       (prevState) => {
         let { otpText } = prevState;
+
         otpText[i] = text;
         return {
           otpText,
@@ -66,9 +75,11 @@ class OTPTextView extends PureComponent {
   };
 
   onInputFocus = (i) => {
-    let prevIndex = i - 1;
+    const { otpText } = this.state;
 
-    if (prevIndex > -1 && !this.state.otpText[prevIndex]) {
+    const prevIndex = i - 1;
+
+    if (prevIndex > -1 && !otpText[prevIndex] && !otpText.join("")) {
       this.inputs[prevIndex].focus();
       return;
     }
@@ -77,11 +88,9 @@ class OTPTextView extends PureComponent {
   };
 
   onKeyPress = (e, i) => {
-    if (
-      e.nativeEvent.key === "Backspace" &&
-      i !== 0 &&
-      !((this.state.otpText[i] || "").length - 1)
-    ) {
+    const val = this.state.otpText[i] || "";
+
+    if (e.nativeEvent.key === "Backspace" && i !== 0 && !(val.length - 1)) {
       this.inputs[i - 1].focus();
     }
   };
@@ -93,6 +102,18 @@ class OTPTextView extends PureComponent {
       },
       () => {
         this.inputs[0].focus();
+      }
+    );
+  };
+
+  setValue = (value) => {
+    const { inputCount, inputCellLength } = this.props;
+    this.setState(
+      {
+        otpText: getOTPTextChucks(inputCount, inputCellLength, value),
+      },
+      () => {
+        this.props.handleTextChange(value);
       }
     );
   };
@@ -110,6 +131,8 @@ class OTPTextView extends PureComponent {
       ...textInputProps
     } = this.props;
 
+    const { focusedInput, otpText } = this.state;
+
     const TextInputs = [];
 
     for (let i = 0; i < inputCount; i += 1) {
@@ -119,7 +142,7 @@ class OTPTextView extends PureComponent {
         { borderColor: offTintColor },
       ];
 
-      if (this.state.focusedInput === i) {
+      if (focusedInput === i) {
         inputStyle.push({ borderColor: tintColor });
       }
 
@@ -132,8 +155,7 @@ class OTPTextView extends PureComponent {
           autoCorrect={false}
           keyboardType={keyboardType}
           autoFocus={false}
-          defaultValue={defaultValue ? this.defaultChars[i] : ""}
-          value={this.state.otpText[i] || ""}
+          value={otpText[i] || ""}
           style={inputStyle}
           maxLength={this.props.inputCellLength}
           onFocus={() => this.onInputFocus(i)}
@@ -144,6 +166,7 @@ class OTPTextView extends PureComponent {
         />
       );
     }
+
     return <View style={[styles.container, containerStyle]}>{TextInputs}</View>;
   }
 }
@@ -151,8 +174,8 @@ class OTPTextView extends PureComponent {
 OTPTextView.propTypes = {
   defaultValue: PropTypes.string,
   inputCount: PropTypes.number,
-  containerStyle: PropTypes.object,
-  textInputStyle: PropTypes.object,
+  containerStyle: PropTypes.any,
+  textInputStyle: PropTypes.any,
   inputCellLength: PropTypes.number,
   tintColor: PropTypes.string,
   offTintColor: PropTypes.string,
