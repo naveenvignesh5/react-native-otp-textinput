@@ -90,7 +90,7 @@ class OTPTextView extends Component {
   onKeyPress = (e, i) => {
     const val = this.state.otpText[i] || "";
 
-    if (e.nativeEvent.key === "Backspace" && i !== 0 && !(val.length - 1)) {
+    if (e.nativeEvent.key === "Backspace" && i !== 0 && !val.length) {
       this.inputs[i - 1].focus();
     }
   };
