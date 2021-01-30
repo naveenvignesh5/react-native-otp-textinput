@@ -1,27 +1,27 @@
-import React, { Component } from "react";
-import { View, TextInput, StyleSheet } from "react-native";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import { View, TextInput, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   textInput: {
     height: 50,
     width: 50,
     borderBottomWidth: 4,
     margin: 5,
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 22,
-    fontWeight: "500",
-    color: "#000000",
+    fontWeight: '500',
+    color: '#000000',
   },
 });
 
 const getOTPTextChucks = (inputCount, inputCellLength, text) => {
   let otpText =
-    text.match(new RegExp(".{1," + inputCellLength + "}", "g")) || [];
+    text.match(new RegExp('.{1,' + inputCellLength + '}', 'g')) || [];
 
   otpText = otpText.slice(0, inputCount);
 
@@ -66,7 +66,7 @@ class OTPTextView extends Component {
         };
       },
       () => {
-        handleTextChange(this.state.otpText.join(""));
+        handleTextChange(this.state.otpText.join(''));
         if (text.length === inputCellLength && i !== inputCount - 1) {
           this.inputs[i + 1].focus();
         }
@@ -79,7 +79,7 @@ class OTPTextView extends Component {
 
     const prevIndex = i - 1;
 
-    if (prevIndex > -1 && !otpText[prevIndex] && !otpText.join("")) {
+    if (prevIndex > -1 && !otpText[prevIndex] && !otpText.join('')) {
       this.inputs[prevIndex].focus();
       return;
     }
@@ -88,9 +88,9 @@ class OTPTextView extends Component {
   };
 
   onKeyPress = (e, i) => {
-    const val = this.state.otpText[i] || "";
+    const val = this.state.otpText[i] || '';
 
-    if (e.nativeEvent.key === "Backspace" && i !== 0 && !val.length) {
+    if (e.nativeEvent.key === 'Backspace' && i !== 0 && !val.length) {
       this.inputs[i - 1].focus();
     }
   };
@@ -102,17 +102,25 @@ class OTPTextView extends Component {
       },
       () => {
         this.inputs[0].focus();
+        this.props.handleTextChange('');
       }
     );
   };
 
   setValue = (value) => {
     const { inputCount, inputCellLength } = this.props;
+
+    const updatedFocusInput = value.length - 1;
+
     this.setState(
       {
         otpText: getOTPTextChucks(inputCount, inputCellLength, value),
       },
       () => {
+        if (this.inputs[updatedFocusInput]) {
+          this.inputs[updatedFocusInput].focus();
+        }
+
         this.props.handleTextChange(value);
       }
     );
@@ -155,7 +163,7 @@ class OTPTextView extends Component {
           autoCorrect={false}
           keyboardType={keyboardType}
           autoFocus={false}
-          value={otpText[i] || ""}
+          value={otpText[i] || ''}
           style={inputStyle}
           maxLength={this.props.inputCellLength}
           onFocus={() => this.onInputFocus(i)}
@@ -185,15 +193,15 @@ OTPTextView.propTypes = {
 };
 
 OTPTextView.defaultProps = {
-  defaultValue: "",
+  defaultValue: '',
   inputCount: 4,
-  tintColor: "#3CB371",
-  offTintColor: "#DCDCDC",
+  tintColor: '#3CB371',
+  offTintColor: '#DCDCDC',
   inputCellLength: 1,
   containerStyle: {},
   textInputStyle: {},
   handleTextChange: () => {},
-  keyboardType: "numeric",
+  keyboardType: 'numeric',
 };
 
 export default OTPTextView;
