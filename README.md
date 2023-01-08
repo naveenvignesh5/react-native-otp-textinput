@@ -37,6 +37,7 @@ The following props are applicable for the component along with **props supporte
 | inputCellLength  | number | Yes      | 1       | Number of character that can be entered inside a single cell.                    |
 | containerStyle   | object | Yes      | {}      | style for overall container.                                                     |
 | textInputStyle   | object | Yes      | {}      | style for text input.                                                            |
+| testIDPrefix     | string | Yes      | 'otp_input_'    | testID prefix, the result will be `otp_input_0` until inputCount         |
 
 #### Helper Functions
 

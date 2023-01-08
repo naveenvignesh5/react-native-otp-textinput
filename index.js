@@ -157,6 +157,7 @@ class OTPTextView extends Component {
       containerStyle,
       textInputStyle,
       keyboardType,
+      testIDPrefix,
       ...textInputProps
     } = this.props;
 
@@ -192,6 +193,7 @@ class OTPTextView extends Component {
           multiline={false}
           onKeyPress={(e) => this.onKeyPress(e, i)}
           {...textInputProps}
+          testID={`${testIDPrefix}${i}`}
         />
       );
     }
@@ -211,6 +213,7 @@ OTPTextView.propTypes = {
   handleTextChange: PropTypes.func,
   inputType: PropTypes.string,
   keyboardType: PropTypes.string,
+  testIDPrefix: PropTypes.string,
 };
 
 OTPTextView.defaultProps = {
@@ -222,7 +225,8 @@ OTPTextView.defaultProps = {
   containerStyle: {},
   textInputStyle: {},
   handleTextChange: () => {},
-  keyboardType: "numeric",
+  testIDPrefix: "otp_input_",
+
 };
 
 export default OTPTextView;
