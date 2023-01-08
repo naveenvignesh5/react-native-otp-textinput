@@ -225,6 +225,7 @@ OTPTextView.defaultProps = {
   containerStyle: {},
   textInputStyle: {},
   handleTextChange: () => {},
+  keyboardType: "numeric",
   testIDPrefix: "otp_input_",
 
 };
