@@ -227,7 +227,6 @@ OTPTextView.defaultProps = {
   handleTextChange: () => {},
   keyboardType: "numeric",
   testIDPrefix: "otp_input_",
-
 };
 
 export default OTPTextView;
