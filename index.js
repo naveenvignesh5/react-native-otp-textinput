@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
   },
 });
 
+const DEFAULT_TINT_COLOR = "#3CB371";
+const DEFAULT_OFF_TINT_COLOR = "#DCDCDC";
+
 const getOTPTextChucks = (inputCount, inputCellLength, text) => {
   let otpText =
     text.match(new RegExp(".{1," + inputCellLength + "}", "g")) || [];
@@ -42,7 +45,28 @@ class OTPTextView extends Component {
     };
 
     this.inputs = [];
+
+    this.checkTintColorCount();
   }
+
+  checkTintColorCount = () => {
+    const { tintColor, offTintColor, inputCount } = this.props;
+
+    if (typeof tintColor !== "string" && tintColor.length !== inputCount) {
+      throw new Error(
+        "If tint color is an array it's length should be equal to input count"
+      );
+    }
+
+    if (
+      typeof offTintColor !== "string" &&
+      offTintColor.length !== inputCount
+    ) {
+      throw new Error(
+        "If off tint color is an array it's length should be equal to input count"
+      );
+    }
+  };
 
   basicValidation = (text) => {
     const validText = /^[0-9a-zA-Z]+$/;
@@ -90,28 +114,34 @@ class OTPTextView extends Component {
 
   onKeyPress = (e, i) => {
     const val = this.state.otpText[i] || "";
-    const { handleTextChange, inputCellLength } = this.props;
+    const { handleTextChange, inputCellLength, inputCount } = this.props;
     const { otpText } = this.state;
+
+    if (e.nativeEvent.key !== "Backspace" && val && i !== inputCount - 1) {
+      this.inputs[i + 1].focus();
+      return;
+    }
+
     if (e.nativeEvent.key === "Backspace" && i !== 0) {
-      if (val.length === 0) {
-        if (otpText[i - 1].length === inputCellLength) {
-          this.setState(
-            (prevState) => {
-              let { otpText } = prevState;
-              otpText[i - 1] = otpText[i - 1]
-                .split("")
-                .splice(0, otpText[i - 1].length - 1)
-                .join("");
-              return {
-                otpText,
-              };
-            },
-            () => {
-              handleTextChange(this.state.otpText.join(""));
-              this.inputs[i - 1].focus();
-            }
-          );
-        }
+      if (!val.length && otpText[i - 1].length === inputCellLength) {
+        this.setState(
+          (prevState) => {
+            let { otpText } = prevState;
+
+            otpText[i - 1] = otpText[i - 1]
+              .split("")
+              .splice(0, otpText[i - 1].length - 1)
+              .join("");
+
+            return {
+              otpText,
+            };
+          },
+          () => {
+            handleTextChange(this.state.otpText.join(""));
+            this.inputs[i - 1].focus();
+          }
+        );
       }
     }
   };
@@ -166,14 +196,23 @@ class OTPTextView extends Component {
     const TextInputs = [];
 
     for (let i = 0; i < inputCount; i += 1) {
+      const _tintColor =
+        typeof tintColor === "string" ? tintColor : tintColor[i];
+      const _offTintColor =
+        typeof offTintColor === "string" ? offTintColor : offTintColor[i];
+
       const inputStyle = [
         styles.textInput,
         textInputStyle,
-        { borderColor: offTintColor },
+        {
+          borderColor: _offTintColor,
+        },
       ];
 
       if (focusedInput === i) {
-        inputStyle.push({ borderColor: tintColor });
+        inputStyle.push({
+          borderColor: _tintColor,
+        });
       }
 
       TextInputs.push(
@@ -192,6 +231,7 @@ class OTPTextView extends Component {
           onChangeText={(text) => this.onTextChange(text, i)}
           multiline={false}
           onKeyPress={(e) => this.onKeyPress(e, i)}
+          selectionColor={_tintColor}
           {...textInputProps}
           testID={`${testIDPrefix}${i}`}
         />
@@ -208,8 +248,14 @@ OTPTextView.propTypes = {
   containerStyle: PropTypes.any,
   textInputStyle: PropTypes.any,
   inputCellLength: PropTypes.number,
-  tintColor: PropTypes.string,
-  offTintColor: PropTypes.string,
+  tintColor: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  offTintColor: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
   handleTextChange: PropTypes.func,
   inputType: PropTypes.string,
   keyboardType: PropTypes.string,
@@ -219,8 +265,8 @@ OTPTextView.propTypes = {
 OTPTextView.defaultProps = {
   defaultValue: "",
   inputCount: 4,
-  tintColor: "#3CB371",
-  offTintColor: "#DCDCDC",
+  tintColor: DEFAULT_TINT_COLOR,
+  offTintColor: DEFAULT_OFF_TINT_COLOR,
   inputCellLength: 1,
   containerStyle: {},
   textInputStyle: {},
