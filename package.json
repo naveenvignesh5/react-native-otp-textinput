@@ -1,6 +1,6 @@
 {
   "name": "react-native-otp-textinput",
-  "version": "0.0.10",
+  "version": "1.0.0",
   "description": "Textview usable for OTP implementation",
   "main": "index.js",
   "scripts": {
