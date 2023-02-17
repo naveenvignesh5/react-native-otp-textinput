@@ -38,6 +38,7 @@ The following props are applicable for the component along with **props supporte
 | containerStyle   | object | Yes      | {}           | style for overall container.                                                     |
 | textInputStyle   | object | Yes      | {}           | style for text input.                                                            |
 | testIDPrefix     | string | Yes      | 'otp*input*' | testID prefix, the result will be `otp_input_0` until inputCount                 |
+| secureTextEntry  | boolean | Yes     | false        | password field                 |
 
 #### Helper Functions
 
