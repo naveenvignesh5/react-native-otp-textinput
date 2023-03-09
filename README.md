@@ -7,6 +7,7 @@ React Native Component that can used for OTPs and Pins as secure pin input.
 ![npm downloads](https://img.shields.io/npm/dw/react-native-otp-textinput.svg)
 
 #### Installation
+---
 
 NPM
 ```
@@ -18,14 +19,17 @@ yarn add react-native-otp-textinput
 ```
 
 #### Demo
+---
 
 <img src="ScreenShots/demo.gif" width="220px"><br>
 
 #### How to Use
+---
 
 Check the `Example` react native app for usage.
 
 #### Platform Support
+---
 
 Supports both Android and iOS.
 
