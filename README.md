@@ -34,6 +34,7 @@ Check the `Example` react native app for usage.
 Supports both Android and iOS.
 
 #### Props
+---
 
 The following props are applicable for the component along with **props supported by react native `TextInput` component**
 
@@ -50,6 +51,7 @@ The following props are applicable for the component along with **props supporte
 | testIDPrefix     | string | Yes      | 'otp*input*' | testID prefix, the result will be `otp_input_0` until inputCount                 |
 
 #### Helper Functions
+---
 
 Clearing and Setting values to component
 
@@ -98,6 +100,7 @@ const ParentComponent = () => {
 ```
 
 #### If you like the project
+---
 
 If you think I have helped you, feel free to get me coffee. 😊
 
