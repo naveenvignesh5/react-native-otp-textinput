@@ -7,8 +7,13 @@ React Native Component that can used for OTPs and Pins as secure pin input.
 
 #### Installation
 
+NPM
 ```
 npm i -S react-native-otp-textinput
+```
+YARN
+```
+yarn add react-native-otp-textinput
 ```
 
 #### Demo
