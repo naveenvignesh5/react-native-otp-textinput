@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { View, TextInput, StyleSheet } from "react-native";
-import PropTypes from "prop-types";
+import { View, TextInput, StyleSheet, NativeSyntheticEvent, TextInputKeyPressEventData } from "react-native";
+import { InputProps, OTPInputViewState } from "react-native-otp-textinput";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,25 +22,33 @@ const styles = StyleSheet.create({
 const DEFAULT_TINT_COLOR = "#3CB371";
 const DEFAULT_OFF_TINT_COLOR = "#DCDCDC";
 
-const getOTPTextChucks = (inputCount, inputCellLength, text) => {
-  let otpText =
-    text.match(new RegExp(".{1," + inputCellLength + "}", "g")) || [];
-
+const getOTPTextChucks = (inputCount: number, inputCellLength: number, text?: string) => {
+  let otpText: RegExpMatchArray | [] | string[] =
+    text?.match(new RegExp(".{1," + inputCellLength + "}", "g")) || [];
+  
   otpText = otpText.slice(0, inputCount);
 
   return otpText;
 };
 
-class OTPTextView extends Component {
-  constructor(props) {
-    super(props);
+class OTPTextView extends Component<InputProps, OTPInputViewState> {
+  static defaultProps: InputProps = {
+    inputCount: 4,
+    inputCellLength: 1,
+    tintColor: DEFAULT_TINT_COLOR,
+    offTintColor: DEFAULT_OFF_TINT_COLOR,
+    handleTextChange: () => () => console.log("OTPTextView: handleTextChange"),
+}
+  inputs: TextInput[];
 
+  constructor(props: InputProps) {
+    super(props);
     this.state = {
       focusedInput: 0,
       otpText: getOTPTextChucks(
         props.inputCount,
         props.inputCellLength,
-        props.defaultValue
+        props?.defaultValue
       ),
     };
 
@@ -68,12 +76,12 @@ class OTPTextView extends Component {
     }
   };
 
-  basicValidation = (text) => {
+  basicValidation = (text: string) => {
     const validText = /^[0-9a-zA-Z]+$/;
     return text.match(validText);
   };
 
-  onTextChange = (text, i) => {
+  onTextChange = (text: string, i: number) => {
     const { inputCellLength, inputCount, handleTextChange } = this.props;
 
     if (text && !this.basicValidation(text)) {
@@ -82,7 +90,7 @@ class OTPTextView extends Component {
 
     this.setState(
       (prevState) => {
-        let { otpText } = prevState;
+        const { otpText } = prevState;
 
         otpText[i] = text;
 
@@ -99,7 +107,7 @@ class OTPTextView extends Component {
     );
   };
 
-  onInputFocus = (i) => {
+  onInputFocus = (i: number) => {
     const { otpText } = this.state;
 
     const prevIndex = i - 1;
@@ -112,7 +120,7 @@ class OTPTextView extends Component {
     this.setState({ focusedInput: i });
   };
 
-  onKeyPress = (e, i) => {
+  onKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>, i: number) => {
     const val = this.state.otpText[i] || "";
     const { handleTextChange, inputCellLength, inputCount } = this.props;
     const { otpText } = this.state;
@@ -126,7 +134,7 @@ class OTPTextView extends Component {
       if (!val.length && otpText[i - 1].length === inputCellLength) {
         this.setState(
           (prevState) => {
-            let { otpText } = prevState;
+            const { otpText } = prevState;
 
             otpText[i - 1] = otpText[i - 1]
               .split("")
@@ -158,7 +166,7 @@ class OTPTextView extends Component {
     );
   };
 
-  setValue = (value) => {
+  setValue = (value: string) => {
     const { inputCount, inputCellLength } = this.props;
 
     const updatedFocusInput = value.length - 1;
@@ -218,7 +226,7 @@ class OTPTextView extends Component {
       TextInputs.push(
         <TextInput
           ref={(e) => {
-            this.inputs[i] = e;
+            this.inputs[i] = e as TextInput;
           }}
           key={i}
           autoCorrect={false}
@@ -242,26 +250,6 @@ class OTPTextView extends Component {
   }
 }
 
-OTPTextView.propTypes = {
-  defaultValue: PropTypes.string,
-  inputCount: PropTypes.number,
-  containerStyle: PropTypes.any,
-  textInputStyle: PropTypes.any,
-  inputCellLength: PropTypes.number,
-  tintColor: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
-  offTintColor: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
-  handleTextChange: PropTypes.func,
-  inputType: PropTypes.string,
-  keyboardType: PropTypes.string,
-  testIDPrefix: PropTypes.string,
-};
-
 OTPTextView.defaultProps = {
   defaultValue: "",
   inputCount: 4,
@@ -270,7 +258,7 @@ OTPTextView.defaultProps = {
   inputCellLength: 1,
   containerStyle: {},
   textInputStyle: {},
-  handleTextChange: () => {},
+  handleTextChange: () => () => console.log("Please attach a method to handle text change"),
   keyboardType: "numeric",
   testIDPrefix: "otp_input_",
 };
