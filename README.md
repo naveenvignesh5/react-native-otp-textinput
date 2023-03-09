@@ -1,4 +1,5 @@
 ### REACT NATIVE OTP TEXT INPUT
+---
 
 React Native Component that can used for OTPs and Pins as secure pin input.
 
