@@ -1,14 +1,13 @@
 {
-  "name": "react-native-otp-ultimate",
-  "version": "1.0.3",
+  "name": "react-native-otp",
+  "version": "1.0.0",
   "description": "TypeSafe Textview usable for OTP implementation",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepub": "rm -rf dist && tsc && cp package*.json dist",
     "pub": "npm publish ./dist"
   },
-  "source": "dist/index",
   "keywords": [
     "react-native",
     "react-native-component",
@@ -28,8 +27,6 @@
     "prop-types": "^15.5.7",
     "react-native": ">=0.20.0"
   },
-  "files": [
-    "dist"],
   "author": "Lucjan Grzesik <lucjan.grzesik@gmail.com>",
   "license": "MIT",
   "devDependencies": {
