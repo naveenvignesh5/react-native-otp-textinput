@@ -32,6 +32,7 @@ declare module 'react-native-otp-ultimate' {
     focusedInput: number
     otpText: string[]
     editable: boolean
+    fromAutoFill: boolean
   }
 
   export default class OTPInputView extends React.Component<

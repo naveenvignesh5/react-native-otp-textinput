@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, TextInput, StyleSheet, Platform, } from 'react-native';
-import Clipboard from '@react-native-clipboard/clipboard';
+import * as Clipboard from 'expo-clipboard';
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
@@ -48,13 +48,29 @@ class OTPTextView extends Component {
             }
             this.setState(prevState => {
                 const { otpText } = prevState;
+                if (text.length === inputCount * inputCellLength) {
+                    text.split('').map((item, index) => {
+                        otpText[index] = item;
+                    });
+                    return {
+                        otpText,
+                        fromAutoFill: true,
+                    };
+                }
                 otpText[i] = text;
                 return {
                     otpText,
+                    fromAutoFill: false,
                 };
             }, () => {
                 handleTextChange && handleTextChange(this.state.otpText.join(''));
-                if (text.length === inputCellLength && i !== inputCount - 1) {
+                if (text.length === inputCount * inputCellLength &&
+                    this.state.fromAutoFill) {
+                    this.inputs[this.inputs.length - 1].focus();
+                }
+                if (text.length === inputCellLength &&
+                    i !== inputCount - 1 &&
+                    !this.state.fromAutoFill) {
                     this.inputs[i + 1].focus();
                 }
                 if (this.state.otpText.length === inputCount) {
@@ -83,7 +99,7 @@ class OTPTextView extends Component {
         this.checkPinCodeFromClipBoard = () => {
             const { inputCount, onCodeFilled, inputCellLength } = this.props;
             const regexp = new RegExp(`^\\d{${inputCount}}$`);
-            Clipboard.getString()
+            Clipboard.getStringAsync()
                 .then(code => {
                 if (this.hasCheckedClipBoard &&
                     regexp.test(code) &&
@@ -105,7 +121,6 @@ class OTPTextView extends Component {
             this.setState({
                 editable: false,
             });
-            console.log(this.state);
         };
         this.onKeyPress = (e, i) => {
             const val = this.state.otpText[i] || '';
@@ -158,6 +173,7 @@ class OTPTextView extends Component {
             focusedInput: 0,
             otpText: getOTPTextChucks(props.inputCount, props.inputCellLength, props === null || props === void 0 ? void 0 : props.defaultValue),
             editable: true,
+            fromAutoFill: false,
         };
         this.inputs = [];
         this.checkTintColorCount();
@@ -201,7 +217,9 @@ class OTPTextView extends Component {
             }
             TextInputs.push(<TextInput ref={e => {
                     this.inputs[i] = e;
-                }} key={i} autoCorrect={false} keyboardType={keyboardType} autoFocus={i === 0} value={otpText[i] || ''} editable={this.state.editable} style={inputStyle} maxLength={this.props.inputCellLength} onFocus={() => this.onInputFocus(i)} onChangeText={text => this.onTextChange(text, i)} multiline={false} onKeyPress={e => this.onKeyPress(e, i)} selectionColor={_tintColor} {...textInputProps} testID={`${testIDPrefix}${i}`}/>);
+                }} key={i} autoCorrect={false} keyboardType={keyboardType} autoFocus={i === 0} value={otpText[i] || ''} editable={this.state.editable} textContentType="oneTimeCode" autoComplete="sms-otp" style={inputStyle} 
+            // maxLength={this.props.inputCellLength}
+            onFocus={() => this.onInputFocus(i)} onChangeText={text => this.onTextChange(text, i)} multiline={false} onKeyPress={e => this.onKeyPress(e, i)} selectionColor={_tintColor} {...textInputProps} testID={`${testIDPrefix}${i}`}/>);
         }
         return <View style={[styles.container, containerStyle]}>{TextInputs}</View>;
     }

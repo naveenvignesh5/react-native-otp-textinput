@@ -1,6 +1,6 @@
 {
   "name": "react-native-otp-ultimate",
-  "version": "1.0.15",
+  "version": "1.0.19",
   "description": "TypeSafe Textview usable for OTP implementation",
   "main": "dist/index.js",
   "types": "./index.d.ts",
@@ -24,13 +24,9 @@
     "url": "git@github.com:luluhoc/react-native-otp-textinput.git"
   },
   "dependencies": {
-    "@react-native-clipboard/clipboard": "^1.11.2",
-    "@react-native-community/clipboard": "^1.5.1",
-    "add": "^2.0.6",
-    "yarn": "^1.22.19"
+    "expo-clipboard": "^4.1.2"
   },
   "peerDependencies": {
-    "prop-types": "^15.5.7",
     "react-native": ">=0.20.0"
   },
   "files": [

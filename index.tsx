@@ -8,7 +8,7 @@ import {
   Platform,
 } from 'react-native'
 import { InputProps, OTPInputViewState } from 'react-native-otp-ultimate'
-import Clipboard from '@react-native-clipboard/clipboard'
+import * as Clipboard from 'expo-clipboard'
 
 const styles = StyleSheet.create({
   container: {
@@ -66,6 +66,7 @@ class OTPTextView extends Component<InputProps, OTPInputViewState> {
         props?.defaultValue,
       ),
       editable: true,
+      fromAutoFill: false,
     }
 
     this.inputs = []
@@ -120,16 +121,35 @@ class OTPTextView extends Component<InputProps, OTPInputViewState> {
     this.setState(
       prevState => {
         const { otpText } = prevState
-
+        if (text.length === inputCount * inputCellLength) {
+          text.split('').map((item, index) => {
+            otpText[index] = item
+          })
+          return {
+            otpText,
+            fromAutoFill: true,
+          }
+        }
         otpText[i] = text
 
         return {
           otpText,
+          fromAutoFill: false,
         }
       },
       () => {
         handleTextChange && handleTextChange(this.state.otpText.join(''))
-        if (text.length === inputCellLength && i !== inputCount - 1) {
+        if (
+          text.length === inputCount * inputCellLength &&
+          this.state.fromAutoFill
+        ) {
+          this.inputs[this.inputs.length - 1].focus()
+        }
+        if (
+          text.length === inputCellLength &&
+          i !== inputCount - 1 &&
+          !this.state.fromAutoFill
+        ) {
           this.inputs[i + 1].focus()
         }
         if (this.state.otpText.length === inputCount) {
@@ -165,7 +185,7 @@ class OTPTextView extends Component<InputProps, OTPInputViewState> {
   checkPinCodeFromClipBoard = () => {
     const { inputCount, onCodeFilled, inputCellLength } = this.props
     const regexp = new RegExp(`^\\d{${inputCount}}$`)
-    Clipboard.getString()
+    Clipboard.getStringAsync()
       .then(code => {
         if (
           this.hasCheckedClipBoard &&
@@ -194,7 +214,6 @@ class OTPTextView extends Component<InputProps, OTPInputViewState> {
     this.setState({
       editable: false,
     })
-    console.log(this.state)
   }
   onKeyPress = (
     e: NativeSyntheticEvent<TextInputKeyPressEventData>,
@@ -322,8 +341,10 @@ class OTPTextView extends Component<InputProps, OTPInputViewState> {
           autoFocus={i === 0}
           value={otpText[i] || ''}
           editable={this.state.editable}
+          textContentType="oneTimeCode"
+          autoComplete="sms-otp"
           style={inputStyle}
-          maxLength={this.props.inputCellLength}
+          // maxLength={this.props.inputCellLength}
           onFocus={() => this.onInputFocus(i)}
           onChangeText={text => this.onTextChange(text, i)}
           multiline={false}
