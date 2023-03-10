@@ -1,3 +1,5 @@
+### ADDED OPTION TO AUTOCOMPLET ON IOS AND ANDROID, BY THE WAY inputCellLength is limited for the moment
+
 ### REACT NATIVE OTP TEXT INPUT
 ---
 
