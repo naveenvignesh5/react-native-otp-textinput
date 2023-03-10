@@ -1,6 +1,6 @@
 {
   "name": "react-native-otp-ultimate",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "TypeSafe Textview usable for OTP implementation",
   "main": "dist/index.js",
   "types": "./index.d.ts",
