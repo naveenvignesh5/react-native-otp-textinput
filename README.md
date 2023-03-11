@@ -52,7 +52,8 @@ The following props are applicable for the component along with **props supporte
 | Prop             | Type   | Optional | Default      | Description                                                                      |
 | ---------------- | ------ | -------- | ------------ | -------------------------------------------------------------------------------- |
 | defaultValue     | string | Yes      | ''           | Default Value that can be set based on OTP / Pin received from parent container. |
-| handleTextChange | func   | No       | n/a          | callback with concated string of all cells as argument.                          |
+| handleTextChange | func   | Yes       | n/a          | callback with concated string of all cells as argument.
+| onCodeFilled     | func   | Yes       | n/a          | when code is filled function returns the code so you can perform actions.
 | inputCount       | number | Yes      | 4            | Number of Text Input Cells to be present.                                        |
 | tintColor        | string | Yes      | #3CB371      | Color for Cell Border on being focused.                                          |
 | offTintColor     | string | Yes      | #DCDCDC      | Color for Cell Border Border not focused.                                        |
