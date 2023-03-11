@@ -49,6 +49,7 @@ class OTPTextView extends Component<InputProps, OTPInputViewState> {
     inputCellLength: 1,
     tintColor: DEFAULT_TINT_COLOR,
     offTintColor: DEFAULT_OFF_TINT_COLOR,
+    autoFillFromClipBoard: true,
     handleTextChange: (text: string) => {},
   }
   inputs: TextInput[]
@@ -75,7 +76,9 @@ class OTPTextView extends Component<InputProps, OTPInputViewState> {
   }
 
   componentDidMount() {
-    this.copyCodeFromClipBoardOnAndroid()
+    if (this.props.autoFillFromClipBoard) {
+      this.copyCodeFromClipBoardOnAndroid()
+    }
     // this.bringUpKeyBoardIfNeeded()
     // this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.handleKeyboardDidHide)
   }
@@ -365,6 +368,7 @@ OTPTextView.defaultProps = {
   inputCount: 4,
   tintColor: DEFAULT_TINT_COLOR,
   offTintColor: DEFAULT_OFF_TINT_COLOR,
+  autoFillFromClipBoard: true,
   inputCellLength: 1,
   containerStyle: {},
   textInputStyle: {},

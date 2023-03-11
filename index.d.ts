@@ -24,6 +24,7 @@ declare module 'react-native-otp-ultimate' {
     handleTextChange?: (text: string) => void
     containerStyle?: ViewStyle
     textInputStyle?: TextStyle
+    autoFillFromClipBoard?: boolean
     testIDPrefix?: string
     onCodeFilled?: (code: string) => void
   }
