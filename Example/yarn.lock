@@ -5387,6 +5387,15 @@ prompts@^2.4.0:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
+prop-types@^15.5.7:
+  version "15.8.1"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
+  integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
+  dependencies:
+    loose-envify "^1.4.0"
+    object-assign "^4.1.1"
+    react-is "^16.13.1"
+
 prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz"
@@ -5432,7 +5441,7 @@ react-devtools-core@4.19.1:
     shell-quote "^1.6.1"
     ws "^7"
 
-react-is@^16.12.0, react-is@^16.8.1, react-is@^16.8.6:
+react-is@^16.12.0, react-is@^16.13.1, react-is@^16.8.1, react-is@^16.8.6:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
@@ -5451,11 +5460,11 @@ react-native-codegen@^0.0.8:
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
 
-"react-native-otp-textinput@git+https://git@github.com/naveenvignesh5/react-native-otp-textinput.git":
-  version "0.0.8"
-  resolved "git+https://git@github.com/naveenvignesh5/react-native-otp-textinput.git#04d28f930399818fbccd80661b3aa2806277a421"
+react-native-otp-textinput@naveenvignesh5/react-native-otp-textinput#typings:
+  version "1.0.0"
+  resolved "https://codeload.github.com/naveenvignesh5/react-native-otp-textinput/tar.gz/c2d70c05bad7ba23aa02738118b76949f7c34040"
   dependencies:
-    prop-types "^15.6.2"
+    prop-types "^15.5.7"
 
 react-native@0.67.4:
   version "0.67.4"
