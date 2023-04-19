@@ -223,7 +223,7 @@ class OTPTextView extends Component {
           key={i}
           autoCorrect={false}
           keyboardType={keyboardType}
-          autoFocus={i === 0}
+          autoFocus={this.props.autoFocus && i === 0}
           value={otpText[i] || ""}
           style={inputStyle}
           maxLength={this.props.inputCellLength}
@@ -260,6 +260,7 @@ OTPTextView.propTypes = {
   inputType: PropTypes.string,
   keyboardType: PropTypes.string,
   testIDPrefix: PropTypes.string,
+  autoFocus: PropTypes.bool
 };
 
 OTPTextView.defaultProps = {
@@ -273,6 +274,7 @@ OTPTextView.defaultProps = {
   handleTextChange: () => {},
   keyboardType: "numeric",
   testIDPrefix: "otp_input_",
+  autoFocus: false
 };
 
 export default OTPTextView;
