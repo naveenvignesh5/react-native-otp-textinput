@@ -68,7 +68,7 @@ render() {
 import React, { useRef } from 'react';
 
 const ParentComponent = () => {
-    const otpInput = useRef(null);
+    let otpInput = useRef(null);
 
     const clearText = () => {
         otpInput.current.clear();
