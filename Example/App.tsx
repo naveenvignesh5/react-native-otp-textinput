@@ -1,7 +1,16 @@
 import React, { useRef, useState } from 'react';
-import { StyleSheet, Text, View, Button, Alert, TextInput, SafeAreaView, ScrollView } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Alert,
+  TextInput,
+  SafeAreaView,
+  ScrollView,
+} from 'react-native';
 
-import OTPTextView from './OTPTextInput';
+import OTPTextView from 'react-native-otp-textinput';
 
 const styles = StyleSheet.create({
   safeAreaView: {

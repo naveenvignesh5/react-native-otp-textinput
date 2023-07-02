@@ -4,7 +4,9 @@
   "description": "Textview usable for OTP implementation",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "watch:build": "tsc --watch"
   },
   "keywords": [
     "react-native",
@@ -20,12 +22,16 @@
     "url": "git@github.com:naveenvignesh5/react-native-otp-textinput.git"
   },
   "dependencies": {
-    "prop-types": "^15.6.2"
+    "react": "^16.8.6"
   },
   "peerDependencies": {
-    "react-native": ">=0.20.0",
-    "prop-types": "^15.5.7"
+    "react-native": "^0.60.0"
   },
   "author": "Naveen Vignesh.B <naveenvignesh5.nv@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react-native": "^0.72.2",
+    "typescript": "^5.1.6"
+  }
 }
+

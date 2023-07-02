@@ -1,6 +1,22 @@
 import React, { Component } from "react";
-import { View, TextInput, StyleSheet } from "react-native";
-import PropTypes from "prop-types";
+import { View, TextInput, StyleSheet, ViewStyle, KeyboardType, NativeSyntheticEvent, TextInputKeyPressEventData } from "react-native";
+interface IState {
+  focusedInput: number;
+  otpText: string[];
+}
+interface IProps {
+  defaultValue: string;
+  inputCount: number;
+  containerStyle: ViewStyle;
+  textInputStyle: ViewStyle;
+  inputCellLength: number;
+  tintColor: string | string[];
+  offTintColor: string | string[];
+  handleTextChange(text: string): void;
+  keyboardType: KeyboardType;
+  testIDPrefix: string;
+  autoFocus: boolean;
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -19,26 +35,35 @@ const styles = StyleSheet.create({
   },
 });
 
-const DEFAULT_TINT_COLOR = "#3CB371";
-const DEFAULT_OFF_TINT_COLOR = "#DCDCDC";
+const DEFAULT_TINT_COLOR: string = "#3CB371";
+const DEFAULT_OFF_TINT_COLOR: string = "#DCDCDC";
+const DEFAULT_TEST_ID_PREFIX: string = "otp_input_";
+const DEFAULT_KEYBOARD_TYPE: KeyboardType = "numeric";
 
-const getOTPTextChucks = (inputCount, inputCellLength, text) => {
-  let otpText =
-    text.match(new RegExp(".{1," + inputCellLength + "}", "g")) || [];
+class OTPTextView extends Component<IProps, IState> {
+  static defaultProps: Partial<IProps> = {
+    defaultValue: "",
+    inputCount: 4,
+    tintColor: DEFAULT_TINT_COLOR,
+    offTintColor: DEFAULT_OFF_TINT_COLOR,
+    inputCellLength: 1,
+    containerStyle: {},
+    textInputStyle: {},
+    handleTextChange: () => { },
+    keyboardType: DEFAULT_KEYBOARD_TYPE,
+    testIDPrefix: DEFAULT_TEST_ID_PREFIX,
+    autoFocus: false
+  };
 
-  otpText = otpText.slice(0, inputCount);
+  inputs: TextInput[];
 
-  return otpText;
-};
-
-class OTPTextView extends Component {
-  constructor(props) {
+  constructor(props: IProps) {
     super(props);
 
     this.state = {
       focusedInput: 0,
-      otpText: getOTPTextChucks(
-        props.inputCount,
+      otpText: this.getOTPTextChucks(
+        props.inputCount || 4,
         props.inputCellLength,
         props.defaultValue
       ),
@@ -48,6 +73,13 @@ class OTPTextView extends Component {
 
     this.checkTintColorCount();
   }
+
+  getOTPTextChucks = (inputCount: number, inputCellLength: number, text: string): string[] => {
+    let matches =
+      text.match(new RegExp(".{1," + inputCellLength + "}", "g")) || [];
+
+    return matches.slice(0, inputCount);
+  };
 
   checkTintColorCount = () => {
     const { tintColor, offTintColor, inputCount } = this.props;
@@ -68,12 +100,12 @@ class OTPTextView extends Component {
     }
   };
 
-  basicValidation = (text) => {
+  basicValidation = (text: string) => {
     const validText = /^[0-9a-zA-Z]+$/;
     return text.match(validText);
   };
 
-  onTextChange = (text, i) => {
+  onTextChange = (text: string, i: number) => {
     const { inputCellLength, inputCount, handleTextChange } = this.props;
 
     if (text && !this.basicValidation(text)) {
@@ -81,7 +113,7 @@ class OTPTextView extends Component {
     }
 
     this.setState(
-      (prevState) => {
+      (prevState: IState) => {
         let { otpText } = prevState;
 
         otpText[i] = text;
@@ -99,7 +131,7 @@ class OTPTextView extends Component {
     );
   };
 
-  onInputFocus = (i) => {
+  onInputFocus = (i: number) => {
     const { otpText } = this.state;
 
     const prevIndex = i - 1;
@@ -112,7 +144,7 @@ class OTPTextView extends Component {
     this.setState({ focusedInput: i });
   };
 
-  onKeyPress = (e, i) => {
+  onKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>, i: number) => {
     const val = this.state.otpText[i] || "";
     const { handleTextChange, inputCellLength, inputCount } = this.props;
     const { otpText } = this.state;
@@ -158,14 +190,14 @@ class OTPTextView extends Component {
     );
   };
 
-  setValue = (value) => {
+  setValue = (value: string) => {
     const { inputCount, inputCellLength } = this.props;
 
     const updatedFocusInput = value.length - 1;
 
     this.setState(
       {
-        otpText: getOTPTextChucks(inputCount, inputCellLength, value),
+        otpText: this.getOTPTextChucks(inputCount, inputCellLength, value),
       },
       () => {
         if (this.inputs[updatedFocusInput]) {
@@ -188,6 +220,7 @@ class OTPTextView extends Component {
       textInputStyle,
       keyboardType,
       testIDPrefix,
+      autoFocus,
       ...textInputProps
     } = this.props;
 
@@ -218,12 +251,14 @@ class OTPTextView extends Component {
       TextInputs.push(
         <TextInput
           ref={(e) => {
-            this.inputs[i] = e;
+            if (e) {
+              this.inputs[i] = e;
+            }
           }}
           key={i}
           autoCorrect={false}
           keyboardType={keyboardType}
-          autoFocus={this.props.autoFocus && i === 0}
+          autoFocus={autoFocus && i === 0}
           value={otpText[i] || ""}
           style={inputStyle}
           maxLength={this.props.inputCellLength}
@@ -241,40 +276,5 @@ class OTPTextView extends Component {
     return <View style={[styles.container, containerStyle]}>{TextInputs}</View>;
   }
 }
-
-OTPTextView.propTypes = {
-  defaultValue: PropTypes.string,
-  inputCount: PropTypes.number,
-  containerStyle: PropTypes.any,
-  textInputStyle: PropTypes.any,
-  inputCellLength: PropTypes.number,
-  tintColor: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
-  offTintColor: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
-  handleTextChange: PropTypes.func,
-  inputType: PropTypes.string,
-  keyboardType: PropTypes.string,
-  testIDPrefix: PropTypes.string,
-  autoFocus: PropTypes.bool
-};
-
-OTPTextView.defaultProps = {
-  defaultValue: "",
-  inputCount: 4,
-  tintColor: DEFAULT_TINT_COLOR,
-  offTintColor: DEFAULT_OFF_TINT_COLOR,
-  inputCellLength: 1,
-  containerStyle: {},
-  textInputStyle: {},
-  handleTextChange: () => {},
-  keyboardType: "numeric",
-  testIDPrefix: "otp_input_",
-  autoFocus: false
-};
 
 export default OTPTextView;
