@@ -2,11 +2,13 @@
   "name": "react-native-otp-textinput",
   "version": "1.0.1",
   "description": "Textview usable for OTP implementation",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "watch:build": "tsc --watch"
+    "watch:build": "tsc --watch",
+    "prepare": "npm run build"
   },
   "keywords": [
     "react-native",

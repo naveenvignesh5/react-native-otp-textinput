@@ -64,4 +64,4 @@ typings/
 package-lock.json
 
 # generated files
-index.js
+dist
