@@ -1,5 +1,14 @@
+import Clipboard from "@react-native-clipboard/clipboard";
 import React, { Component } from "react";
-import { View, TextInput, StyleSheet, ViewStyle, KeyboardType, NativeSyntheticEvent, TextInputKeyPressEventData } from "react-native";
+import {
+  KeyboardType,
+  NativeSyntheticEvent,
+  StyleSheet,
+  TextInput,
+  TextInputKeyPressEventData,
+  View,
+  ViewStyle,
+} from "react-native";
 interface IState {
   focusedInput: number;
   otpText: string[];
@@ -49,10 +58,10 @@ class OTPTextView extends Component<IProps, IState> {
     inputCellLength: 1,
     containerStyle: {},
     textInputStyle: {},
-    handleTextChange: () => { },
+    handleTextChange: () => {},
     keyboardType: DEFAULT_KEYBOARD_TYPE,
     testIDPrefix: DEFAULT_TEST_ID_PREFIX,
-    autoFocus: false
+    autoFocus: false,
   };
 
   inputs: TextInput[];
@@ -74,7 +83,11 @@ class OTPTextView extends Component<IProps, IState> {
     this.checkTintColorCount();
   }
 
-  getOTPTextChucks = (inputCount: number, inputCellLength: number, text: string): string[] => {
+  getOTPTextChucks = (
+    inputCount: number,
+    inputCellLength: number,
+    text: string
+  ): string[] => {
     let matches =
       text.match(new RegExp(".{1," + inputCellLength + "}", "g")) || [];
 
@@ -105,10 +118,32 @@ class OTPTextView extends Component<IProps, IState> {
     return text.match(validText);
   };
 
-  onTextChange = (text: string, i: number) => {
+  onTextChange = async (text: string, i: number) => {
     const { inputCellLength, inputCount, handleTextChange } = this.props;
 
     if (text && !this.basicValidation(text)) {
+      return;
+    }
+
+    const copiedContent = await Clipboard.getString();
+
+    if (
+      copiedContent &&
+      copiedContent.length === inputCount &&
+      copiedContent[0] === text
+    ) {
+      this.setState(
+        {
+          otpText: this.getOTPTextChucks(
+            inputCount,
+            inputCellLength,
+            copiedContent
+          ),
+        },
+        () => {
+          handleTextChange(this.state.otpText.join(""));
+        }
+      );
       return;
     }
 
@@ -144,7 +179,10 @@ class OTPTextView extends Component<IProps, IState> {
     this.setState({ focusedInput: i });
   };
 
-  onKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>, i: number) => {
+  onKeyPress = (
+    e: NativeSyntheticEvent<TextInputKeyPressEventData>,
+    i: number
+  ) => {
     const val = this.state.otpText[i] || "";
     const { handleTextChange, inputCellLength, inputCount } = this.props;
     const { otpText } = this.state;
