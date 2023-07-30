@@ -1539,6 +1539,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@react-native-clipboard/clipboard@^1.11.2":
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/@react-native-clipboard/clipboard/-/clipboard-1.11.2.tgz#e826d0336b34e67294aaffa6878308900bc7d197"
+  integrity sha512-bHyZVW62TuleiZsXNHS1Pv16fWc0fh8O9WvBzl4h2fykqZRW9a+Pv/RGTH56E3X2PqzHP38K5go8zmCZUoIsoQ==
+
 "@react-native-community/cli-clean@11.3.3":
   version "11.3.3"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-clean/-/cli-clean-11.3.3.tgz#e3b2d5a374f1b35d158087c3be196b59e1757262"
@@ -5623,9 +5628,9 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-native-otp-textinput@naveenvignesh5/react-native-otp-textinput#typescript:
-  version "1.0.1"
-  resolved "https://codeload.github.com/naveenvignesh5/react-native-otp-textinput/tar.gz/252c649c4f50b8cb9b33fc5cd9ff3abaffa62869"
+react-native-otp-textinput@naveenvignesh5/react-native-otp-textinput:
+  version "1.1.0"
+  resolved "https://codeload.github.com/naveenvignesh5/react-native-otp-textinput/tar.gz/56cdf95500b077e7080db4b7b6cad5b60a61d36c"
   dependencies:
     react "^16.8.6"
 
@@ -5921,9 +5926,9 @@ scheduler@^0.23.0:
     loose-envify "^1.1.0"
 
 semver@^5.6.0:
-  version "5.7.1"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
-  integrity sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==
+  version "5.7.2"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.2.tgz#48d55db737c3287cd4835e17fa13feace1c41ef8"
+  integrity "sha1-SNVdtzfDKHzUg14X+hP+rOHEHvg= sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g=="
 
 semver@^6.0.0, semver@^6.1.1, semver@^6.1.2, semver@^6.3.0:
   version "6.3.0"

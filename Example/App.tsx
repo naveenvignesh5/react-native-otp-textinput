@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import OTPTextView from 'react-native-otp-textinput';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 const styles = StyleSheet.create({
   safeAreaView: {
@@ -73,6 +74,15 @@ const App: React.FC = () => {
 
   const showTextAlert = () => otpInput && Alert.alert(otpInput);
 
+  const handleCellTextChange = async (text: string, i: number) => {
+    if (i === 0) {
+      const clippedText = await Clipboard.getString();
+      if (clippedText.slice(0, 1) === text) {
+        input.current?.setValue(clippedText, true);
+      }
+    }
+  };
+
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <ScrollView contentContainerStyle={styles.container}>
@@ -80,6 +90,7 @@ const App: React.FC = () => {
           ref={input}
           containerStyle={styles.textInputContainer}
           handleTextChange={setOtpInput}
+          handleCellTextChange={handleCellTextChange}
           inputCount={4}
           keyboardType="numeric"
         />
@@ -116,7 +127,6 @@ const App: React.FC = () => {
         <OTPTextView
           handleTextChange={() => { }}
           containerStyle={styles.textInputContainer}
-          // textInputStyle={[styles.roundedTextInput, { borderRadius: 100 }]}
           tintColor="#000"
         />
         <TextInput />
@@ -133,7 +143,7 @@ const App: React.FC = () => {
         />
       </ScrollView>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 export default App;
