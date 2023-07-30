@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { View, TextInput, StyleSheet, ViewStyle, KeyboardType, NativeSyntheticEvent, TextInputKeyPressEventData } from "react-native";
+
 interface IState {
   focusedInput: number;
   otpText: string[];
@@ -13,6 +14,7 @@ interface IProps {
   tintColor: string | string[];
   offTintColor: string | string[];
   handleTextChange(text: string): void;
+  handleCellTextChange?(text: string, cellIndex: number): void;
   keyboardType: KeyboardType;
   testIDPrefix: string;
   autoFocus: boolean;
@@ -106,7 +108,7 @@ class OTPTextView extends Component<IProps, IState> {
   };
 
   onTextChange = (text: string, i: number) => {
-    const { inputCellLength, inputCount, handleTextChange } = this.props;
+    const { inputCellLength, inputCount, handleTextChange, handleCellTextChange } = this.props;
 
     if (text && !this.basicValidation(text)) {
       return;
@@ -124,6 +126,7 @@ class OTPTextView extends Component<IProps, IState> {
       },
       () => {
         handleTextChange(this.state.otpText.join(""));
+        handleCellTextChange && handleCellTextChange(text, i);
         if (text.length === inputCellLength && i !== inputCount - 1) {
           this.inputs[i + 1].focus();
         }
@@ -190,10 +193,10 @@ class OTPTextView extends Component<IProps, IState> {
     );
   };
 
-  setValue = (value: string) => {
+  setValue = (value: string, isPaste: boolean = false) => {
     const { inputCount, inputCellLength } = this.props;
 
-    const updatedFocusInput = value.length - 1;
+    const updatedFocusInput = isPaste ? inputCount - 1 : value.length - 1;
 
     this.setState(
       {
