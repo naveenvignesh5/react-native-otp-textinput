@@ -18,6 +18,7 @@ interface IProps {
   keyboardType: KeyboardType;
   testIDPrefix: string;
   autoFocus: boolean;
+  secureTextEntry: boolean;
 }
 
 const styles = StyleSheet.create({
@@ -54,7 +55,8 @@ class OTPTextView extends Component<IProps, IState> {
     handleTextChange: () => { },
     keyboardType: DEFAULT_KEYBOARD_TYPE,
     testIDPrefix: DEFAULT_TEST_ID_PREFIX,
-    autoFocus: false
+    autoFocus: false,
+    secureTextEntry: false
   };
 
   inputs: TextInput[];
@@ -224,6 +226,7 @@ class OTPTextView extends Component<IProps, IState> {
       keyboardType,
       testIDPrefix,
       autoFocus,
+      secureTextEntry,
       ...textInputProps
     } = this.props;
 
@@ -259,6 +262,7 @@ class OTPTextView extends Component<IProps, IState> {
             }
           }}
           key={i}
+          secureTextEntry={secureTextEntry}
           autoCorrect={false}
           keyboardType={keyboardType}
           autoFocus={autoFocus && i === 0}
