@@ -24,15 +24,15 @@
     "url": "git@github.com:naveenvignesh5/react-native-otp-textinput.git"
   },
   "dependencies": {
-    "react": "^18.2.0"
+    "react": "*"
   },
   "peerDependencies": {
-    "react-native": "^0.72.4"
+    "react-native": "*"
   },
   "author": "Naveen Vignesh.B <naveenvignesh5.nv@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@types/react-native": "^0.72.2",
-    "typescript": "^5.1.6"
+    "@types/react-native": "*",
+    "typescript": "*"
   }
 }
