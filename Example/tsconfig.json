@@ -1,6 +1,14 @@
 {
   "compilerOptions": {
-    "jsx": "react-native"
+    "baseUrl": ".",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "es2015.promise"
+    ],
+    "jsx": "react-native",
+    "forceConsistentCasingInFileNames": true
   },
-  "extends": "@tsconfig/react-native/tsconfig.json"
+  "extends": "@tsconfig/react-native/tsconfig.json",
 }

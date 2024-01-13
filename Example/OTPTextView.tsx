@@ -60,7 +60,7 @@ class OTPTextView extends Component<IProps, IState> {
     inputCellLength: 1,
     containerStyle: {},
     textInputStyle: {},
-    handleTextChange: () => { },
+    handleTextChange: () => {},
     keyboardType: DEFAULT_KEYBOARD_TYPE,
     testIDPrefix: DEFAULT_TEST_ID_PREFIX,
     autoFocus: false,

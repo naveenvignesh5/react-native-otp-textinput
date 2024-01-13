@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
 });
 
 const App: React.FC = () => {
-  const [otpInput, setOtpInput] = useState<string>("");
+  const [otpInput, setOtpInput] = useState<string>('');
 
   const input = useRef<OTPTextView>(null);
 
@@ -101,42 +101,31 @@ const App: React.FC = () => {
         />
         <View style={styles.buttonWrapper}>
           <Button title="Clear" onPress={clear} />
-          <Button
-            title="Update"
-            onPress={updateOtpText}
-          />
-          <Button
-            title="Submit"
-            onPress={showTextAlert}
-          />
+          <Button title="Update" onPress={updateOtpText} />
+          <Button title="Submit" onPress={showTextAlert} />
         </View>
         <Text style={styles.instructions}>Customizations</Text>
         <OTPTextView
-          handleTextChange={() => { }}
           containerStyle={styles.textInputContainer}
           textInputStyle={styles.roundedTextInput}
           inputCount={5}
           inputCellLength={2}
         />
         <OTPTextView
-          handleTextChange={() => { }}
           containerStyle={styles.textInputContainer}
           textInputStyle={styles.roundedTextInput}
           defaultValue="1234"
         />
         <OTPTextView
-          handleTextChange={() => { }}
           containerStyle={styles.textInputContainer}
           tintColor="#000"
         />
         <TextInput />
         <OTPTextView
-          handleTextChange={() => { }}
           containerStyle={styles.textInputContainer}
           tintColor={['#FF0000', '#FFFF00', '#00FF00', '#0000FF']}
         />
         <OTPTextView
-          handleTextChange={() => { }}
           containerStyle={styles.textInputContainer}
           tintColor="#000"
           offTintColor={['#FF0000', '#FFFF00', '#00FF00', '#0000FF']}
