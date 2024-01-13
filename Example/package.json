@@ -13,7 +13,7 @@
     "@react-native-clipboard/clipboard": "^1.11.2",
     "react": "18.2.0",
     "react-native": "0.72.6",
-    "react-native-otp-textinput": "^1.1.3"
+    "react-native-otp-textinput": "file:../"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
