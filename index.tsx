@@ -169,7 +169,6 @@ class OTPTextView extends Component<IProps, IState> {
     e: NativeSyntheticEvent<TextInputKeyPressEventData>,
     i: number,
   ) => {
-    console.log('onKeyPress');
     const val = this.state.otpText[i] || '';
     const { handleTextChange, inputCellLength, inputCount } = this.props;
     const { otpText } = this.state;
