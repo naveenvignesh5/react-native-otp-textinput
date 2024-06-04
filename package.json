@@ -23,16 +23,17 @@
     "type": "git",
     "url": "git@github.com:naveenvignesh5/react-native-otp-textinput.git"
   },
-  "dependencies": {
-    "react": "18.2.0"
-  },
   "peerDependencies": {
-    "react-native": "0.74.1"
+    "react": "*",
+    "react-native": "*"
   },
   "author": "Naveen Vignesh.B <naveenvignesh5.nv@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@types/react": "~18.2.79",
-    "typescript": "~5.3.3"
-  }
+    "react": "18.2.0",
+    "react-native": "0.73.5",
+    "@types/react": "18.2.79",
+    "typescript": "5.3.3"
+  },
+  "packageManager": "yarn@1.22.19"
 }
