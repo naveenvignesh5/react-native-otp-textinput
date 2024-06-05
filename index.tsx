@@ -27,6 +27,7 @@ interface IProps {
   keyboardType: KeyboardType;
   testIDPrefix: string;
   autoFocus: boolean;
+  disabled: boolean;
 }
 
 const styles = StyleSheet.create({
@@ -64,6 +65,7 @@ class OTPTextView extends Component<IProps, IState> {
     keyboardType: DEFAULT_KEYBOARD_TYPE,
     testIDPrefix: DEFAULT_TEST_ID_PREFIX,
     autoFocus: false,
+    disabled: false,
   };
 
   inputs: TextInput[];
@@ -292,6 +294,7 @@ class OTPTextView extends Component<IProps, IState> {
           onKeyPress={e => this.onKeyPress(e, i)}
           selectionColor={_tintColor}
           cursorColor={_tintColor}
+          editable={!disabled}
           {...textInputProps}
           testID={`${testIDPrefix}${i}`}
         />,
