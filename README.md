@@ -40,6 +40,8 @@ The following props are applicable for the component along with **props supporte
 | textInputStyle       | object | Yes      | {}           | style for text input.                                                                  |
 | testIDPrefix         | string | Yes      | 'otp*input*' | testID prefix, the result will be `otp_input_0` until inputCount                       |
 | autoFocus            | bool   | Yes      | false        | Input should automatically get focus when the components loads                         |
+| onBlur               | func   | Yes      | n/a          | Callback that is called when the text input is blurred.                                |
+| onFocus              | func   | Yes      | n/a          | Callback that is called when the text input is focused.                                |
 
 #### Helper Functions
 
