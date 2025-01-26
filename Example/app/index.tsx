@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import OTPTextView from 'react-native-otp-textinput';
-import Clipboard from '@react-native-clipboard/clipboard';
+import Clipboard from 'expo-clipboard';
 
 const styles = StyleSheet.create({
   safeAreaView: {
@@ -76,7 +76,7 @@ const App: React.FC = () => {
 
   const handleCellTextChange = async (text: string, i: number) => {
     if (i === 0) {
-      const clippedText = await Clipboard.getString();
+      const clippedText = await Clipboard.getStringAsync();
       if (clippedText.slice(0, 1) === text) {
         input.current?.setValue(clippedText, true);
       }
