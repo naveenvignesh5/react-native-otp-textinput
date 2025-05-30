@@ -29,6 +29,7 @@ interface IProps {
   autoFocus: boolean;
   onFocus(): void;
   onBlur(): void;
+  disabled: boolean;
 }
 
 const styles = StyleSheet.create({
@@ -68,6 +69,7 @@ class OTPTextView extends Component<IProps, IState> {
     autoFocus: false,
     onFocus: () => {},
     onBlur: () => {},
+    disabled: false,
   };
 
   inputs: TextInput[];
@@ -302,6 +304,7 @@ class OTPTextView extends Component<IProps, IState> {
           onKeyPress={e => this.onKeyPress(e, i)}
           selectionColor={_tintColor}
           cursorColor={_tintColor}
+          editable={!disabled}
           {...textInputProps}
           testID={`${testIDPrefix}${i}`}
         />,
