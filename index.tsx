@@ -27,6 +27,8 @@ interface IProps {
   keyboardType: KeyboardType;
   testIDPrefix: string;
   autoFocus: boolean;
+  onFocus(): void;
+  onBlur(): void;
   disabled: boolean;
 }
 
@@ -36,14 +38,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   textInput: {
-    height: 50,
-    width: 50,
     borderBottomWidth: 4,
-    margin: 5,
-    textAlign: 'center',
+    color: '#000000',
     fontSize: 22,
     fontWeight: '500',
-    color: '#000000',
+    height: 50,
+    margin: 5,
+    textAlign: 'center',
+    width: 50,
   },
 });
 
@@ -61,10 +63,12 @@ class OTPTextView extends Component<IProps, IState> {
     inputCellLength: 1,
     containerStyle: {},
     textInputStyle: {},
-    handleTextChange: () => { },
+    handleTextChange: () => {},
     keyboardType: DEFAULT_KEYBOARD_TYPE,
     testIDPrefix: DEFAULT_TEST_ID_PREFIX,
     autoFocus: false,
+    onFocus: () => {},
+    onBlur: () => {},
     disabled: false,
   };
 
@@ -247,6 +251,8 @@ class OTPTextView extends Component<IProps, IState> {
       keyboardType,
       testIDPrefix,
       autoFocus,
+      onFocus,
+      onBlur,
       ...textInputProps
     } = this.props;
 
@@ -288,7 +294,11 @@ class OTPTextView extends Component<IProps, IState> {
           value={otpText[i] || ''}
           style={inputStyle}
           maxLength={this.props.inputCellLength}
-          onFocus={() => this.onInputFocus(i)}
+          onFocus={() => {
+            this.props.onFocus();
+            this.onInputFocus(i);
+          }}
+          onBlur={() => this.props.onBlur()}
           onChangeText={text => this.onTextChange(text, i)}
           multiline={false}
           onKeyPress={e => this.onKeyPress(e, i)}
