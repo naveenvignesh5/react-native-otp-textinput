@@ -7,6 +7,7 @@ import {
   KeyboardType,
   NativeSyntheticEvent,
   TextInputKeyPressEventData,
+  TextInputProps
 } from 'react-native';
 
 interface IState {
@@ -14,7 +15,7 @@ interface IState {
   otpText: string[];
 }
 
-interface IProps {
+interface IProps extends TextInputProps {
   defaultValue: string;
   inputCount: number;
   containerStyle: ViewStyle;
