@@ -254,6 +254,7 @@ class OTPTextView extends Component<IProps, IState> {
       autoFocus,
       onFocus,
       onBlur,
+      disabled,
       ...textInputProps
     } = this.props;
 
