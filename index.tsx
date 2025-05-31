@@ -245,8 +245,8 @@ class OTPTextView extends Component<IProps, IState> {
       inputCount,
       offTintColor,
       tintColor,
-      defaultValue, // eslint-disable-line @typescript-eslint/no-unused-vars
-      inputCellLength, // eslint-disable-line @typescript-eslint/no-unused-vars
+      defaultValue,
+      inputCellLength,
       containerStyle,
       textInputStyle,
       keyboardType,

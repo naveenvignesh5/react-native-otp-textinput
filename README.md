@@ -42,6 +42,7 @@ The following props are applicable for the component along with **props supporte
 | autoFocus            | bool   | Yes      | false        | Input should automatically get focus when the components loads                         |
 | onBlur               | func   | Yes      | n/a          | Callback that is called when the text input is blurred.                                |
 | onFocus              | func   | Yes      | n/a          | Callback that is called when the text input is focused.                                |
+| disabled              | func   | Yes      | false          | To disable the input                                |
 
 #### Helper Functions
 
