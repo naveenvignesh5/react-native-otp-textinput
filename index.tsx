@@ -7,12 +7,13 @@ import {
   KeyboardType,
   NativeSyntheticEvent,
   TextInputKeyPressEventData,
-  TextInputProps
+  TextInputProps,
 } from 'react-native';
 
 interface IState {
   focusedInput: number;
   otpText: string[];
+  isAutoFilled: boolean;
 }
 
 interface IProps extends TextInputProps {
@@ -85,6 +86,7 @@ class OTPTextView extends Component<IProps, IState> {
         props.inputCellLength,
         props.defaultValue,
       ),
+      isAutoFilled: false,
     };
 
     this.inputs = [];
@@ -139,14 +141,24 @@ class OTPTextView extends Component<IProps, IState> {
       return;
     }
 
+    if (i === 0 && text.length === inputCount) {
+      const newOtpText = text.split('').map(char => char || '');
+      this.setState({ otpText: newOtpText, isAutoFilled: true }, () => {
+        handleTextChange(this.state.otpText.join(''));
+      });
+      this.inputs[1].blur();
+      return;
+    }
+
     this.setState(
       (prevState: IState) => {
         let { otpText } = prevState;
 
-        otpText[i] = text;
+        otpText[i] = text.substring(0, inputCellLength);
 
         return {
           otpText,
+          isAutoFilled: false,
         };
       },
       () => {
@@ -258,7 +270,7 @@ class OTPTextView extends Component<IProps, IState> {
       ...textInputProps
     } = this.props;
 
-    const { focusedInput, otpText } = this.state;
+    const { focusedInput, otpText, isAutoFilled } = this.state;
 
     const TextInputs = [];
 
@@ -276,7 +288,10 @@ class OTPTextView extends Component<IProps, IState> {
         },
       ];
 
-      if (focusedInput === i) {
+      if (
+        (focusedInput === i && !isAutoFilled) ||
+        (isAutoFilled && i === inputCount - 1)
+      ) {
         inputStyle.push({
           borderColor: _tintColor,
         });
@@ -295,7 +310,7 @@ class OTPTextView extends Component<IProps, IState> {
           autoFocus={autoFocus && i === 0}
           value={otpText[i] || ''}
           style={inputStyle}
-          maxLength={this.props.inputCellLength}
+          maxLength={this.props.inputCount}
           onFocus={() => {
             this.props.onFocus();
             this.onInputFocus(i);
